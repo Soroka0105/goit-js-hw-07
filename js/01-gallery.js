@@ -28,6 +28,23 @@ function createMarkup(arr) {
     )
     .join("");
 }
+
 container.insertAdjacentHTML("beforeend", createMarkup(galleryItems));
 container.addEventListener("click", openModal);
-function openModal(evt) {}
+
+function openModal(evt) {
+  evt.preventDefault();
+  const instance = basicLightbox.create(`
+  	<img src="${evt.target.dataset.source}" alt="${evt.target.alt}" />
+  `);
+  instance.show();
+  const visible = instance.visible();
+  console.log(visible);
+  if (visible === true) {
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        instance.close();
+      }
+    });
+  }
+}
