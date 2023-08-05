@@ -39,7 +39,7 @@ function openModal(evt) {
   `);
   instance.show();
   const visible = instance.visible();
-  console.log(visible);
+
   if (visible === true) {
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
