@@ -34,6 +34,9 @@ container.addEventListener("click", openModal);
 
 function openModal(evt) {
   evt.preventDefault();
+  if (evt.target === evt.currentTarget) {
+    return;
+  }
   const instance = basicLightbox.create(`
   	<img src="${evt.target.dataset.source}" alt="${evt.target.alt}" />
   `);
@@ -41,10 +44,14 @@ function openModal(evt) {
   const visible = instance.visible();
 
   if (visible === true) {
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") {
-        instance.close();
-      }
-    });
+    document.addEventListener("keydown", closeModal);
+  } else {
+    document.removeEventListener("keydown", closeModal);
+  }
+
+  function closeModal(evt) {
+    if (evt.key === "Escape") {
+      instance.close();
+    }
   }
 }
